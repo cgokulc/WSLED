@@ -137,9 +137,9 @@ void setup(){
   Serial.println("WS2812FX setup");
   ws2812fx.init();
   ws2812fx.setMode(FX_MODE_STATIC);
-  ws2812fx.setColor(0xFF5900);
+  ws2812fx.setColor(0xFF00FF);
   ws2812fx.setSpeed(1000);
-  ws2812fx.setBrightness(0);
+  ws2812fx.setBrightness(20);
   ws2812fx.start();
 
   Serial.println("Wifi setup");
