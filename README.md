@@ -27,4 +27,12 @@ git clone https://github.com/cgokulc/WSLED
 
 Waalaah Finally Set-up finally done.
 
+## Feature
+- Clean WebUI with 60+ effects (thnaks to [WS2812BFx](https://github.com/kitesurfer1404/WS2812FX) library)
+- Voice assistants Google Home & Alexa (thanks to [Sinric Pro](https://sinric.pro/) service)
+- Auto Wifi reconnect, in case router restarts
+- TUI for minimilists who love terminal and automation (copy light script to some folder in your PATH and edit ip address)  *only for UNIX users
 
+## To Do
+- Improve webUI for mobile experience
+- Support for sound reactive effect
