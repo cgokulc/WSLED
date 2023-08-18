@@ -1,0 +1,150 @@
+#!/bin/bash
+############################################################
+# Help                                                     #
+############################################################
+Help()
+{
+   # Display Help
+   echo "Description of the script"
+   echo
+   echo "Syntax: scriptTemplate [-b|m|s|h|C]"
+   echo "options:"
+   echo "C     Health check, check if reachable."
+   echo "h     Print this Help."
+   echo "b     Set brightness(0-100)."
+   echo "m     Set mode(0-71)."
+   echo "s     Set speed(100-10000)"
+   echo "v     Print software version and exit."
+   echo "c     Set color(Hex code of color in RGB order)."
+   echo "p     Power on/off"
+}
+
+Invalid()
+{
+    echo "Unexpected argument(s)"
+    echo "Try -h flag for help"
+}
+
+
+############################################################
+############################################################
+# Main program                                             #
+############################################################
+############################################################
+
+# Set variables
+url="http://192.168.100.10/set?"
+var=""
+val=""
+############################################################
+# Process the input options. Add options as needed.        #
+############################################################
+# Get the options
+while getopts ":acChbpmsv:" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+      b) # brightness
+         var="b"
+         val=$2;;
+      m) # mode
+         var="m"
+         val=$2;;
+      s) # brightness
+         var="s"
+         val=$2;;
+      c)
+          var="c"
+          val=$(( 16#$2 ));;
+      a)
+          var="a"
+          if [ "$2" = "0"  ]; then
+              val="-"
+          elif [ "$2" = "1"  ]; then
+              val=""
+          fi;;
+      p)
+	      var="p"
+	      if [ "$2" = "0"  ]; then
+	          val="0"
+	      elif [ "$2" = "1"  ]; then
+	          val="1"
+	      fi;;
+      *)
+         echo "Error: Invalid option"
+         Help
+         exit;;
+   esac
+done
+
+if [[ "$var" = "b" ]]; then
+    if [ "$val" -lt 0  ]; then
+        echo "Accepted Brightness value range (0-100)"
+        exit
+    fi
+    if [ "$val" -gt 100  ]; then
+        echo "Accepted Brightness value range (0-100)"
+        exit
+    fi
+    if [[ "$val" == "" ]]; then
+        echo "Argument required"
+        Invalid
+        exit
+    fi
+
+fi
+
+if [[ "$var" = "m" ]]; then
+    if [ "$val" -lt 0  ]; then
+        echo "Accepted Mode value range (0-71)"
+        exit
+    fi
+    if [ "$val" -gt 71  ]; then
+        echo "Accepted Mode value range (0-71)"
+        exit
+    fi
+    if [[ "$val" == "" ]]; then
+        echo "Argument required"
+        Invalid
+        exit
+    fi
+fi
+
+
+if [[ "$var" = "s" ]]; then
+    if [ "$val" -lt 100  ]; then
+        echo "Accepted Speed value range (0-100)"
+        exit
+    fi
+    if [ "$val" -gt 10000  ]; then
+        echo "Accepted Speed value range (0-100)"
+        exit
+    fi
+    if [[ "$val" == "" ]]; then
+        echo "Argument required"
+        Invalid
+        exit
+    fi
+
+fi
+
+
+if [[ "$var" = "c" ]]; then
+    if [ "$val" -lt 0  ]; then
+        echo "Accepted Color value range (0-FFFFFF)"
+        exit
+    fi
+    if [ "$val" -gt 16777215  ]; then
+        echo "Accepted Color value range (0-FFFFFF)"
+        exit
+    fi
+    if [[ "$val" == "" ]]; then
+        echo "Argument required"
+        Invalid
+        exit
+    fi
+fi
+
+curl -s -o /dev/null $url$var\=$val
+echo "$url$var=$val"
