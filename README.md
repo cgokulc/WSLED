@@ -4,7 +4,7 @@ Control Neopixels from WebUI, voice assistant and also from terminal, yeah you h
 ![webUI](img/webUI.png)
 ![TUI](img/TUI.png)
 
-## Get Up and Running
+## Get It Up and Running
 
 ```
 git clone https://github.com/cgokulc/WSLED
